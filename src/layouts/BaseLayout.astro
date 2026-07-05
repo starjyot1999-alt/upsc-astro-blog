@@ -1,0 +1,50 @@
+---
+const { pageTitle } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+    </nav>
+    
+    <!-- The slot is where your individual page content will magically appear! -->
+    <slot />
+    
+  </body>
+</html>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 10%;
+    background-color: #f9fafb;
+    color: #4d4646;
+  }
+  
+  h1 {
+    color: #183b9a;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background-color: #1e3a8a;
+    padding: 15px;
+    margin-bottom: 40px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+</style>
