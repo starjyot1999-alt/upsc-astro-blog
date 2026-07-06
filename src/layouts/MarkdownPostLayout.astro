@@ -1,104 +1,102 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-
-// 1. We now accept 'headings' from Astro.props
-const { frontmatter, headings } = Astro.props;
 import EmailSignup from '../components/EmailSignup.astro';
+import AdBanner from '../components/AdBanner.astro';
+
+// 1. Astro automatically passes a "headings" array alongside your frontmatter!
+const { frontmatter, headings } = Astro.props;
 ---
 
-<!-- Notice there is ONLY ONE BaseLayout tag here now! -->
 <BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
   <div class="post-header">
     <h1>{frontmatter.title}</h1>
-    <p><em>Written by {frontmatter.author} on {frontmatter.pubDate.toString().slice(0,10)}</em></p>
-    <p class="description">{frontmatter.description}</p>
-    
-    <div class="tags">
-      {frontmatter.tags.map((tag: any) => (
-        <a class="tag" href={`/upsc-astro-blog/tags/${tag}`}>{tag}</a>
-      ))}
-    </div>
-
-    <hr />
+    <p><em>{frontmatter.description}</em></p>
   </div>
 
-  <!-- 2. Our new Automatic Table of Contents -->
-  <div class="toc">
-    <h3>Table of Contents</h3>
-    <ul>
-      {headings.map((heading: any) => (
-        <li>
-          <!-- Astro automatically generates a unique 'slug' (ID) for every heading! -->
-          <a href={`#${heading.slug}`}>{heading.text}</a>
-        </li>
-      ))}
-    </ul>
-  </div>
+  <!-- 2. Automatically generate the Table of Contents if headings exist -->
+  {headings && headings.length > 0 && (
+    <nav class="toc">
+      <h2>📑 Table of Contents</h2>
+      <ul>
+        {headings.map((heading) => (
+          <li class={`depth-${heading.depth}`}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
 
-  <!-- The actual post content renders here -->
-  <slot />
+  <!-- 3. The actual post content renders here! -->
+  <div class="post-content">
+    <slot />
+  </div>
   
-    <EmailSignup />
-
-  <style>
-    .post-header {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    .description {
-      color: #666;
-      font-style: italic;
-    }
-    hr {
-      border: none;
-      border-top: 1px solid #ddd;
-      margin: 1.5rem 0;
-    }
-    .tags {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-    .tag {
-      background-color: #0056b3;
-      color: white;
-      border-radius: 9999px;
-      padding: 0.25rem 0.75rem;
-      font-size: 0.85rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-decoration: none; 
-    }
-    
-    /* New styles for the Table of Contents box */
-    .toc {
-      background-color: #f8f9fa;
-      border: 1px solid #e9ecef;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    .toc h3 {
-      margin-top: 0;
-      font-size: 1.2rem;
-      color: #333;
-    }
-    .toc ul {
-      list-style-type: none;
-      padding-left: 0;
-      margin-bottom: 0;
-    }
-    .toc li {
-      margin-bottom: 0.5rem;
-    }
-    .toc a {
-      text-decoration: none;
-      color: #0056b3;
-    }
-    .toc a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <AdBanner />
+  <EmailSignup />
 </BaseLayout>
+
+<style>
+  /* Global smooth scrolling so the page glides to the section! */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  .post-header {
+    margin-bottom: 2rem;
+  }
+
+  .post-header h1 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Table of Contents Styling */
+  .toc {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #0056b3;
+  }
+  
+  .toc h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .toc li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Indent H3 and H4 headings to create a visual hierarchy */
+  .toc .depth-3 { padding-left: 1.5rem; }
+  .toc .depth-4 { padding-left: 3rem; }
+  
+  .toc a {
+    text-decoration: none;
+    color: #0056b3;
+    transition: color 0.2s ease;
+  }
+  
+  .toc a:hover {
+    color: #ff9900;
+    text-decoration: underline;
+  }
+
+  /* Basic styling for the markdown content */
+  .post-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #444;
+  }
+</style>
