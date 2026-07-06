@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch all posts and extract a unique list of tags
+const allPosts = await getCollection('blog');
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+---
+
+<BaseLayout pageTitle="UPSC Syllabus Topics" description="Browse all free UPSC study notes by subject.">
+  <div class="tags-container">
+    <h1>📑 Browse by Subject</h1>
+    <p>Select a topic below to see all related study materials and notes.</p>
+    
+    <div class="tags-grid">
+      {tags.map((tag) => (
+        <a class="tag-button" href={`/upsc-astro-blog/tags/${tag}`}>{tag}</a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tags-container {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .tag-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #f1f8ff;
+    color: #0056b3;
+    border: 2px solid #0056b3;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    transition: all 0.2s ease;
+  }
+  .tag-button:hover {
+    background-color: #0056b3;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+</style>

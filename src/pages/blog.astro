@@ -2,21 +2,67 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+// Fetch all your UPSC study notes from the content vault
 const allPosts = await getCollection('blog');
-
-// Sort posts by newest date first
-allPosts.sort((a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout pageTitle="UPSC Blog & Notes - UPSC Prep Hub">
-  <h1>UPSC Study Materials</h1>
-  <p>Browse our latest articles, notes, and guides below:</p>
+<BaseLayout pageTitle="UPSC Study Notes Library" description="Browse all free UPSC study guides and notes.">
+  <div class="blog-header">
+    <h1>📚 UPSC Study Notes Library</h1>
+    <p>Welcome to your complete preparation hub. Browse all our latest study guides below.</p>
+  </div>
 
-  <ul>
-    {allPosts.map((post: any) => (
-      <li>
-        <a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a>
-      </li>
+  <div class="post-grid">
+    {allPosts.map((post) => (
+      <article class="post-card">
+        <!-- Notice we include your base path so the links work on GitHub! -->
+        <h2><a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a></h2>
+        <p>{post.data.description}</p>
+        <a class="read-more" href={`/upsc-astro-blog/posts/${post.id}`}>Read Notes →</a>
+      </article>
     ))}
-  </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .post-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .post-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #0056b3;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .post-card h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+  .post-card h2 a {
+    text-decoration: none;
+    color: #333;
+  }
+  .post-card h2 a:hover {
+    color: #0056b3;
+  }
+  .read-more {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #0056b3;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .read-more:hover {
+    text-decoration: underline;
+  }
+</style>
