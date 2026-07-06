@@ -1,0 +1,104 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+// 1. We now accept 'headings' from Astro.props
+const { frontmatter, headings } = Astro.props;
+import EmailSignup from '../components/EmailSignup.astro';
+---
+
+<!-- Notice there is ONLY ONE BaseLayout tag here now! -->
+<BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
+  <div class="post-header">
+    <h1>{frontmatter.title}</h1>
+    <p><em>Written by {frontmatter.author} on {frontmatter.pubDate.toString().slice(0,10)}</em></p>
+    <p class="description">{frontmatter.description}</p>
+    
+    <div class="tags">
+      {frontmatter.tags.map((tag: any) => (
+        <a class="tag" href={`/upsc-astro-blog/tags/${tag}`}>{tag}</a>
+      ))}
+    </div>
+
+    <hr />
+  </div>
+
+  <!-- 2. Our new Automatic Table of Contents -->
+  <div class="toc">
+    <h3>Table of Contents</h3>
+    <ul>
+      {headings.map((heading: any) => (
+        <li>
+          <!-- Astro automatically generates a unique 'slug' (ID) for every heading! -->
+          <a href={`#${heading.slug}`}>{heading.text}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- The actual post content renders here -->
+  <slot />
+  
+    <EmailSignup />
+
+  <style>
+    .post-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .description {
+      color: #666;
+      font-style: italic;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 1.5rem 0;
+    }
+    .tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .tag {
+      background-color: #0056b3;
+      color: white;
+      border-radius: 9999px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: none; 
+    }
+    
+    /* New styles for the Table of Contents box */
+    .toc {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .toc h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .toc ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    .toc li {
+      margin-bottom: 0.5rem;
+    }
+    .toc a {
+      text-decoration: none;
+      color: #0056b3;
+    }
+    .toc a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</BaseLayout>

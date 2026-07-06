@@ -1,0 +1,23 @@
+---
+// A simple reusable component for your study guides
+---
+<div class="exam-tip">
+  <strong>💡 UPSC Prelims Tip:</strong>
+  <!-- The <slot /> is where the text you write inside the component will appear -->
+  <slot />
+</div>
+
+<style>
+  .exam-tip {
+    background-color: #e0f7fa;
+    border-left: 5px solid #0056b3;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+  }
+  .exam-tip strong {
+    color: #0056b3;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+</style>

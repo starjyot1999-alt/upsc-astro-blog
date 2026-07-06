@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
+import Quote from '../../components/Quote.astro'; 
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+
+const mdxComponents = { blockquote: Quote };
+---
+
+<!-- THIS IS THE CRITICAL LINE: We MUST pass frontmatter={post.data} here! -->
+<MarkdownPostLayout frontmatter={post.data} headings={headings}>
+  <Content components={mdxComponents} />
+</MarkdownPostLayout>

@@ -1,8 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+
+// Sort posts by newest date first
+allPosts.sort((a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout pageTitle="Blog - UPSC Prep Hub">
-  <h1>UPSC Study Blog</h1>
-  <p>Read our latest articles on current affairs, syllabus breakdowns, and interview tips.</p>
+<BaseLayout pageTitle="UPSC Blog & Notes - UPSC Prep Hub">
+  <h1>UPSC Study Materials</h1>
+  <p>Browse our latest articles, notes, and guides below:</p>
+
+  <ul>
+    {allPosts.map((post: any) => (
+      <li>
+        <a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>

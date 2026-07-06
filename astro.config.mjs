@@ -1,6 +1,11 @@
 import { defineConfig } from 'astro/config';
 
+import mdx from '@astrojs/mdx';
+
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
-  site: 'https://starjyot1999-alt.github.io',
+  site: 'https://my-upsc-prep-hub.com',
   base: '/upsc-astro-blog',
+  integrations: [mdx(), sitemap()],
 });

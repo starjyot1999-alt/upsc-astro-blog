@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  // 1. Fetch all posts from our new content vault
+  const allPosts = await getCollection('blog');
+
+  // 2. Gather all unique tags from every post. Notice we use post.data.tags now!
+  const uniqueTags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())];
+
+  // 3. Tell Astro to generate a page for each tag, and pass it the matching posts
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post: any) => post.data.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout pageTitle={`${tag} Notes - UPSC Prep Hub`}>
+  <h1>UPSC Notes tagged with "{tag}"</h1>
+  <ul>
+    {posts.map((post: any) => (
+      <li>
+        {/* We use post.id to build the URL and post.data for the title */}
+        <a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

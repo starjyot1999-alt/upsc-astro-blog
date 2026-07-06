@@ -1,0 +1,28 @@
+---
+// A custom wrapper for our blockquotes
+---
+<blockquote class="custom-quote">
+  <span class="quote-icon">❝</span>
+  <slot />
+</blockquote>
+
+<style>
+  .custom-quote {
+    background: #f8f9fa;
+    border-left: 4px solid #0056b3;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    position: relative;
+    border-radius: 0 8px 8px 0;
+  }
+  .quote-icon {
+    color: #0056b3;
+    font-size: 2.5rem;
+    position: absolute;
+    left: 0.5rem;
+    top: -0.5rem;
+    opacity: 0.2;
+    font-family: serif;
+  }
+</style>

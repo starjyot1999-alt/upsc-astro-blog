@@ -1,50 +1,31 @@
 ---
-const { pageTitle } = Astro.props;
+// We accept the pageTitle, and optionally a description for SEO
+const { pageTitle, description = "High-quality, free UPSC study materials and notes." } = Astro.props;
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Our SEO Tags -->
     <title>{pageTitle}</title>
+    <meta name="description" content={description} />
   </head>
   <body>
-    <nav>
-      <a href="/upsc-astro-blog/">Home</a>
-      <a href="/upsc-astro-blog/about">About</a>
-      <a href="/upsc-astro-blog/blog">Blog</a>
+    <!-- Main Navigation Menu -->
+    <nav style="background-color: #0056b3; padding: 1rem; text-align: center;">
+      <a href="/upsc-astro-blog/" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Home</a>
+      <a href="/upsc-astro-blog/about" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">About</a>
+      <a href="/upsc-astro-blog/blog" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Blog</a>
+      <a href="/upsc-astro-blog/contact" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Contact</a>
     </nav>
-    
-    <!-- The slot is where your individual page content will magically appear! -->
-    <slot />
-    
+
+    <main style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+      <!-- This is where individual page or markdown content is injected -->
+      <slot />
+    </main>
   </body>
 </html>
-
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 10%;
-    background-color: #f9fafb;
-    color: #4d4646;
-  }
-  
-  h1 {
-    color: #183b9a;
-  }
-  
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    background-color: #1e3a8a;
-    padding: 15px;
-    margin-bottom: 40px;
-  }
-
-  nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-  }
-</style>

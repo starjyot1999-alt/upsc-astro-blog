@@ -1,0 +1,77 @@
+---
+// A reusable email signup form to build your student audience
+---
+<div class="signup-box">
+  <h3>🚀 Ping me</h3>
+  <p>Get notified when our premium GS preparation course launches, plus get weekly study tips!</p>
+  
+  <!-- The form element acts as a wrapper for interactive controls [4, 5] -->
+  <form action="" method="get" class="signup-form">
+    <label for="email" class="sr-only">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+<style>
+  .signup-box {
+    background-color: #f1f8ff;
+    border: 2px solid #0056b3;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .signup-box h3 {
+    margin-top: 0;
+    color: #0056b3;
+  }
+  .signup-form {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  /* sr-only visually hides the label but keeps it for screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+  input[type="email"] {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 60%;
+    max-width: 300px;
+    font-size: 1rem;
+  }
+  button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  button:hover {
+    background-color: #004494;
+  }
+  
+  /* Flexbox makes it easy to stack the form on mobile phones [6] */
+  @media (max-width: 600px) {
+    .signup-form {
+      flex-direction: column;
+    }
+    input[type="email"] {
+      width: 100%;
+    }
+  }
+</style>
