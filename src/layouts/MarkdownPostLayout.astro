@@ -11,12 +11,17 @@ const { frontmatter, headings } = Astro.props;
   <div class="post-header">
     <h1>{frontmatter.title}</h1>
     <p><em>{frontmatter.description}</em></p>
+    <div class="tags">
+      {frontmatter.tags && frontmatter.tags.map((tag) => (
+        <a href={`/upsc-astro-blog/tags/${tag}`} class="tag">#{tag}</a>
+      ))}
+    </div>
   </div>
 
   <!-- 2. Automatically generate the Table of Contents if headings exist -->
   {headings && headings.length > 0 && (
     <nav class="toc">
-      <h2>📑 Table of Contents</h2>
+      <h2>📑 Quick Navigation</h2>
       <ul>
         {headings.map((heading) => (
           <li class={`depth-${heading.depth}`}>
@@ -32,6 +37,7 @@ const { frontmatter, headings } = Astro.props;
     <slot />
   </div>
   
+  <!-- 4. Your monetization and capture components remain intact! -->
   <AdBanner />
   <EmailSignup />
 </BaseLayout>
@@ -47,24 +53,46 @@ const { frontmatter, headings } = Astro.props;
   }
 
   .post-header h1 {
-    color: #333;
+    color: #0056b3; /* Updated to match your CivisCraft brand blue */
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
-
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .tag {
+    background-color: #e9ecef;
+    color: #0056b3; /* CivisCraft Blue */
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px; /* Makes the edges perfectly pill-shaped */
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  
+  .tag:hover {
+    background-color: #ff9900; /* CivisCraft Orange */
+    color: white;
+    }
   /* Table of Contents Styling */
   .toc {
     background-color: #f8f9fa;
     padding: 1.5rem;
     border-radius: 8px;
     margin-bottom: 2rem;
-    border-left: 4px solid #0056b3;
+    border-left: 4px solid #ff9900; /* Updated to your CivisCraft orange accent */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   }
   
   .toc h2 {
     margin-top: 0;
     font-size: 1.2rem;
-    color: #333;
+    color: #0056b3;
     margin-bottom: 1rem;
   }
   
@@ -84,7 +112,8 @@ const { frontmatter, headings } = Astro.props;
   
   .toc a {
     text-decoration: none;
-    color: #0056b3;
+    color: #444;
+    font-weight: 500;
     transition: color 0.2s ease;
   }
   
@@ -99,12 +128,13 @@ const { frontmatter, headings } = Astro.props;
     font-size: 1.1rem;
     color: #444;
   }
-  /* 1. NEW: Make all images inside posts responsive! */
+  
+  /* Make all images inside posts responsive! */
   .post-content :global(img) {
     max-width: 100%;
     height: auto;
-    border-radius: 8px; /* Adds a nice professional curve to the corners */
-    margin: 2rem auto; /* Adds breathing room above and below the image */
-    display: block; /* Centers the image if it is smaller than the container */
+    border-radius: 8px; 
+    margin: 2rem auto; 
+    display: block; 
   }
 </style>

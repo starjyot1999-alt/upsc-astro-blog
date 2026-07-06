@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout pageTitle="Page Not Found | CivisCraft" description="Oops! This UPSC topic couldn't be found.">
+  <div class="error-container">
+    <h1>404</h1>
+    <h2>Oops! You wandered off the syllabus.</h2>
+    <p>We can't seem to find the page you're looking for. It might have been moved or deleted.</p>
+    <a href="/upsc-astro-blog/" class="back-btn">Return to Dashboard</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-container {
+    text-align: center;
+    padding: 5rem 1rem;
+  }
+  h1 {
+    font-size: 6rem;
+    color: #cab10a; /* CivisCraft accent color */
+    margin: 0;
+    line-height: 1;
+  }
+  h2 {
+    color: #030370; /* CivisCraft blue */
+    margin-top: 1rem;
+  }
+  p {
+    color: #444;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+  .back-btn {
+    background-color: #030370;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s ease;
+  }
+  .back-btn:hover {
+    background-color: #cab10a;
+  }
+</style>

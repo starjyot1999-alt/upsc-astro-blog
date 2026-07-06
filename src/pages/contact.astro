@@ -2,41 +2,59 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout pageTitle="Contact Us - UPSC Prep Hub">
-  <h1>Contact Us</h1>
-  <p>Have a question about your UPSC preparation or need specific study materials? Send us a message!</p>
+<BaseLayout pageTitle="Contact CivisCraft" description="Get in touch with CivisCraft for UPSC preparation queries.">
+  <div class="contact-container">
+    <h1>📬 Get in Touch</h1>
+    <p>Have a question about our UPSC notes or want to suggest a new topic? Drop a message below!</p>
 
-  <form class="contact-form" action="https://formspree.io/f/xkolydva" method="POST">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required />
-    </div>
+    <!-- Notice we kept YOUR Formspree action link here so emails actually send! -->
+    <form class="contact-form" action="https://formspree.io/f/xkolydva" method="POST">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required placeholder="Aspirant Name" />
+      </div>
 
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
-    </div>
+      <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required placeholder="aspirant@example.com" />
+      </div>
 
-    <div class="form-group">
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-    </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="5" required placeholder="How can we help you on your UPSC journey?"></textarea>
+      </div>
 
-    <button type="submit">Send Message</button>
-  </form>
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+  </div>
 </BaseLayout>
 
 <style>
-  .contact-form {
+  .contact-container {
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  h1 {
+    color: #0056b3;
+    text-align: center;
+  }
+  p {
+    text-align: center;
+    color: #444;
+    margin-bottom: 2rem;
+  }
+  
+  .contact-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    background-color: #f8f9fa;
+    background: #f8f9fa;
     padding: 2rem;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    /* The CivisCraft Orange top border! */
+    border-top: 4px solid #ff9900; 
   }
   .form-group {
     display: flex;
@@ -52,20 +70,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
-    font-family: inherit;
+    width: 100%;
+    /* Prevents padding from breaking the 100% width limit */
+    box-sizing: border-box; 
   }
-  button {
+  .submit-btn {
     background-color: #0056b3;
     color: white;
+    padding: 0.75rem 1.5rem;
     border: none;
-    padding: 0.75rem;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1.1rem;
-    cursor: pointer;
     font-weight: bold;
-    margin-top: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
   }
-  button:hover {
-    background-color: #004494;
+  .submit-btn:hover {
+    background-color: #ff9900;
   }
 </style>

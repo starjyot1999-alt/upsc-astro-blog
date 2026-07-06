@@ -2,67 +2,88 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Fetch all your UPSC study notes from the content vault
+// 1. We keep YOUR excellent Content Collections fetcher!
 const allPosts = await getCollection('blog');
 ---
 
-<BaseLayout pageTitle="UPSC Study Notes Library" description="Browse all free UPSC study guides and notes.">
-  <div class="blog-header">
-    <h1>📚 UPSC Study Notes Library</h1>
-    <p>Welcome to your complete preparation hub. Browse all our latest study guides below.</p>
-  </div>
+<BaseLayout pageTitle="UPSC Notes & Blog | CivisCraft" description="Browse all free UPSC study materials, notes, and articles by CivisCraft.">
+  <div class="blog-container">
+    <h1>📚 CivisCraft Study Guides</h1>
+    <p class="subtitle">Read our latest structured notes for your UPSC preparation.</p>
 
-  <div class="post-grid">
-    {allPosts.map((post) => (
-      <article class="post-card">
-        <!-- Notice we include your base path so the links work on GitHub! -->
-        <h2><a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a></h2>
-        <p>{post.data.description}</p>
-        <a class="read-more" href={`/upsc-astro-blog/posts/${post.id}`}>Read Notes →</a>
-      </article>
-    ))}
+    <div class="post-grid">
+      <!-- 2. We map over your collection using post.data and post.id -->
+      {allPosts.map((post) => (
+        <a href={`/upsc-astro-blog/posts/${post.id}`} class="post-card">
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
+          <span class="read-more">Read Notes →</span>
+        </a>
+      ))}
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .blog-header {
+  .blog-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  h1 {
+    color: #030370; /* CivisCraft Blue */
     text-align: center;
-    margin-bottom: 3rem;
-  }
-  .post-grid {
-    display: grid;
-    gap: 1.5rem;
-  }
-  .post-card {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid #0056b3;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .post-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-  .post-card h2 {
-    margin-top: 0;
     margin-bottom: 0.5rem;
   }
-  .post-card h2 a {
+  
+  .subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+  }
+  
+  /* Flexbox column to stack the cards neatly */
+  .post-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* Styling each individual post card */
+  .post-card {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
     text-decoration: none;
-    color: #333;
+    color: inherit;
+    border-left: 4px solid #cab10a; /* CivisCraft Gold accent */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .post-card h2 a:hover {
-    color: #0056b3;
+  
+  /* A smooth floating effect when students hover over a card */
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
+  
+  .post-card h2 {
+    color: #030370;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .post-card p {
+    color: #444;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  
   .read-more {
-    display: inline-block;
-    margin-top: 1rem;
-    color: #0056b3;
+    color: #cab10a;
     font-weight: bold;
-    text-decoration: none;
-  }
-  .read-more:hover {
-    text-decoration: underline;
+    font-size: 0.9rem;
   }
 </style>

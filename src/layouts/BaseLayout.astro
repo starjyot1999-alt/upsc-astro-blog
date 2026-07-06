@@ -1,6 +1,7 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 // We accept the pageTitle, and optionally a description for SEO
-const { pageTitle, description = "High-quality, free UPSC study materials and notes." } = Astro.props;
+const { pageTitle, description = "CivisCraft: Think, Serve, Lead. Free, high-quality UPSC study materials and notes." } = Astro.props;
 ---
 
 <html lang="en">
@@ -13,18 +14,29 @@ const { pageTitle, description = "High-quality, free UPSC study materials and no
     <!-- Our SEO Tags -->
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    
+    <!-- FIX 1: ClientRouter is now safely tucked INSIDE the <head> tags! -->
+    <ClientRouter />
   </head>
   <body>
-    <!-- Main Navigation Menu -->
-    <nav style="background-color: #0056b3; padding: 1rem; text-align: center;">
-  <a href="/upsc-astro-blog/" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Home</a>
-  <a href="/upsc-astro-blog/about" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">About</a>
-  <a href="/upsc-astro-blog/blog" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Blog</a>
-  <!-- Our new Categories link! -->
-  <a href="/upsc-astro-blog/tags" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Subjects</a>
-  <a href="/upsc-astro-blog/downloads" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Downloads</a>
-  <a href="/upsc-astro-blog/contact" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Contact</a>
-</nav>
+    <!-- FIX 2: Added transition:persist to stop the flickering! -->
+    <nav class="main-nav" transition:persist>
+      <!-- The Website Name / Brand -->
+      <a href="/upsc-astro-blog/" class="site-title">
+        <img src="/upsc-astro-blog/images/logo.png" alt="CivisCraft Logo" class="brand-logo" /> 
+        CivisCraft
+      </a>
+      
+      <!-- The Navigation Links -->
+      <div class="nav-links">
+        <a href="/upsc-astro-blog/">Home</a>
+        <a href="/upsc-astro-blog/about">About</a>
+        <a href="/upsc-astro-blog/blog">Blog</a>
+        <a href="/upsc-astro-blog/tags">Subjects</a>
+        <a href="/upsc-astro-blog/downloads">Downloads</a>
+        <a href="/upsc-astro-blog/contact">Contact</a>
+      </div>
+    </nav>
 
     <main style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
       <!-- This is where individual page or markdown content is injected -->
@@ -32,3 +44,42 @@ const { pageTitle, description = "High-quality, free UPSC study materials and no
     </main>
   </body>
 </html>
+
+<!-- The styling for our new navigation is placed at the very bottom -->
+<style>
+  .main-nav {
+    background-color: #030370;
+    padding: 1rem 2rem;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  .site-title {
+    color: white;
+    font-size: 2.5rem; 
+    font-weight: 900;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: flex;
+    gap: 1.5rem; 
+    line-height: 1; 
+    align-items: center;
+  }
+  .site-title:hover {
+    color: #f8f9fa;
+  }
+  .brand-logo {
+    height: 128px; 
+    width: auto;
+  }
+  .nav-links a {
+    color: white;
+    margin-left: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover {
+    color: #cab10a; 
+  }
+</style>

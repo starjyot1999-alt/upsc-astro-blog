@@ -3,53 +3,113 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import EmailSignup from '../components/EmailSignup.astro';
 ---
 
-<BaseLayout pageTitle="About Us" description="Learn more about our mission to help you crack the UPSC exam.">
+<BaseLayout pageTitle="About | CivisCraft" description="Learn about the mission and vision behind CivisCraft.">
   <div class="about-container">
     <h1>🎯 About Our UPSC Mission</h1>
-    <p>Welcome to your new favorite preparation hub! We know how overwhelming the UPSC syllabus can be, which is why we created this portal.</p>
 
-    <h2>Who We Are</h2>
-    <p>We are a team of dedicated educators and past aspirants. Our goal is to provide high-quality, easy-to-read study materials for core subjects like Indian Polity, History, and Geography.</p>
+    <div class="about-content">
+      <!-- 1. Left Side: Your great text and Email Form! -->
+      <div class="about-text">
+        <p>Welcome to <strong>CivisCraft</strong>, your dedicated partner in the UPSC Civil Services journey. We believe that crafting a civil servant is not just about memorizing facts; it is about developing a mindset to <em>Think</em> critically, a heart to <em>Serve</em> the nation, and the capability to <em>Lead</em> with integrity.</p>
+        
+        <h2>Why Choose Us?</h2>
+        <ul>
+          <li>✅ <strong>Structured Notes:</strong> No more getting lost in heavy textbooks.</li>
+          <li>✅ <strong>Exam-Focused:</strong> We only cover what actually matters for Prelims and Mains.</li>
+          <li>✅ <strong>Free Access:</strong> High-quality education shouldn't be hidden behind a paywall.</li>
+        </ul>
 
-    <h2>Why Choose Us?</h2>
-    <ul>
-      <li>✅ <strong>Structured Notes:</strong> No more getting lost in heavy textbooks.</li>
-      <li>✅ <strong>Exam-Focused:</strong> We only cover what actually matters for Prelims and Mains.</li>
-      <li>✅ <strong>Free Access:</strong> High-quality education shouldn't be hidden behind a paywall.</li>
-    </ul>
+        <!-- Reusing your awesome lead-capture component! -->
+        <EmailSignup />
+      </div>
 
-    <!-- Reusing our awesome lead-capture component! -->
-    <EmailSignup />
+      <!-- 2. Right Side: The image placeholder -->
+      <div class="about-image">
+        <div class="image-placeholder">
+          <span>🏛️</span>
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
   .about-container {
-    max-width: 800px;
+    max-width: 900px; /* Made slightly wider to fit both columns beautifully */
     margin: 0 auto;
     padding: 2rem 1rem;
-    line-height: 1.6;
   }
+
   h1 {
-    color: #0056b3;
+    color: #030370; /* CivisCraft Blue */
     text-align: center;
     margin-bottom: 2rem;
   }
+
   h2 {
     color: #333;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     border-bottom: 2px solid #f1f8ff;
     padding-bottom: 0.5rem;
   }
+
   ul {
     list-style: none;
     padding: 0;
   }
+
   li {
     background: #f8f9fa;
     margin-bottom: 0.5rem;
     padding: 1rem;
     border-radius: 8px;
-    border-left: 4px solid #ff9900;
+    border-left: 4px solid #cab10a; /* Updated to CivisCraft Gold */
+  }
+
+  /* 3. Mobile-First Flexbox Layout (Stacked Vertically) */
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-text {
+    flex: 1;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+  }
+
+  .about-text strong {
+    color: #030370;
+  }
+
+  .about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* A decorative circle placeholder */
+  .image-placeholder {
+    background-color: #f8f9fa;
+    border: 4px solid #cab10a; 
+    border-radius: 50%; /* Makes it a perfect circle */
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+  }
+
+  /* 4. Desktop Layout (Side-by-side Row) */
+  @media (min-width: 768px) {
+    .about-content {
+      flex-direction: row; /* Flips the layout side-by-side! */
+      align-items: flex-start; /* Keeps the image at the top of the right column */
+    }
   }
 </style>
