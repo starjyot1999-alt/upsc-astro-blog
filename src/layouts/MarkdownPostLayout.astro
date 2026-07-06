@@ -99,4 +99,12 @@ const { frontmatter, headings } = Astro.props;
     font-size: 1.1rem;
     color: #444;
   }
+  /* 1. NEW: Make all images inside posts responsive! */
+  .post-content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Adds a nice professional curve to the corners */
+    margin: 2rem auto; /* Adds breathing room above and below the image */
+    display: block; /* Centers the image if it is smaller than the container */
+  }
 </style>

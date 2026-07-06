@@ -1,59 +1,122 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailSignup from '../components/EmailSignup.astro';
+
+// 1. We define your exact UPSC syllabus structure here!
+const syllabus = [
+  {
+    title: "Prelims",
+    subTopics: ["Static", "Current Affairs"]
+  },
+  {
+    title: "General Studies I",
+    subTopics: ["Ancient-India", "World History", "Modern History", "Art and Culture", "Geography", "Society"]
+  },
+  {
+    title: "General Studies II",
+    subTopics: ["Indian Polity", "Social Justice and Governance", "International Relations"]
+  },
+  {
+    title: "General Studies III",
+    subTopics: ["Indian Economy", "Agriculture", "Internal Security", "Environment", "Science and Tech"]
+  },
+  {
+    title: "General Studies IV",
+    subTopics: ["Ethics, Integrity, and Aptitude"]
+  },
+  {
+    title: "Essay",
+    subTopics: ["Essay Writing"]
+  },
+  {
+    title: "Anthropology Optional",
+    subTopics: ["Paper 1", "Paper 2"]
+  }
+];
+
+// 2. A helper function to turn "Ancient History" into the URL format "ancient-history"
+const slugify = (text) => text.toLowerCase().replace(/,/g, '').replace(/\s+/g, '-');
 ---
 
-<BaseLayout pageTitle="Home - UPSC Prep Hub">
-  <h1>Welcome to UPSC Prep Hub</h1>
-  <p>Your ultimate free resource for cracking the civil services examination.</p>
-  
-  <h2>Study Materials</h2>
-  
-  <div class="subject-grid">
-    <!-- Changed from /blog to /tags/polity -->
-    <a href="/upsc-astro-blog/tags/polity" class="card">
-      <h3>Indian Polity</h3>
-      <p>Constitution, Governance, and Social Justice.</p>
-    </a>
-    
-    <!-- Changed from /blog to /tags/history -->
-    <a href="/upsc-astro-blog/tags/history" class="card">
-      <h3>History</h3>
-      <p>Ancient, Medieval, Modern, and Art & Culture.</p>
-    </a>
-    
-    <!-- Changed from /blog to /tags/geography -->
-    <a href="/upsc-astro-blog/tags/geography" class="card">
-      <h3>Geography</h3>
-      <p>Physical, Human, and Economic Geography of India and the World.</p>
-    </a>
+<BaseLayout pageTitle="UPSC Notes Hub" description="Free, structured study materials for UPSC Prelims and Mains.">
+  <div class="hero-section">
+    <h1>🎯 Master the UPSC Syllabus</h1>
+    <p>Select a paper and topic below to dive into our free, structured study materials.</p>
   </div>
-  
-  <style>
-    .subject-grid {
-      display: grid; /* Turns the container into a CSS Grid */
-      gap: 1.5rem; /* Explicitly controls the space between the cards */
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* The magic responsive grid formula */
-      margin-top: 2rem;
-    }
-    
-    .card {
-      background-color: #f9f9f9;
-      padding: 1.5rem;
-      border-radius: 8px;
-      text-decoration: none; /* Removes the underline from the links */
-      color: #333;
-      border: 1px solid #ddd;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .card:hover {
-      transform: translateY(-5px); /* Makes the card float up slightly when hovered */
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    }
-    
-    .card h3 {
-      margin-top: 0;
-      color: #0056b3;
-    }
-  </style>
+
+  <div class="syllabus-container">
+    <!-- Astro loops through the syllabus and creates a section for each paper -->
+    {syllabus.map((section) => (
+      <section class="paper-card">
+        <h2>{section.title}</h2>
+        
+        <div class="sub-cards-grid">
+          {section.subTopics.map((topic) => (
+            <a href={`/upsc-astro-blog/tags/${slugify(topic)}`} class="sub-card">
+              {topic}
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <!-- Keep your waitlist at the bottom of the home page -->
+  <EmailSignup />
 </BaseLayout>
+
+<style>
+  .hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .hero-section h1 {
+    color: #0056b3;
+    font-size: 2.5rem;
+  }
+  .syllabus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem; /* Space between the main GS papers */
+    margin-bottom: 4rem;
+  }
+  .paper-card {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    border-top: 5px solid #0056b3;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+  .paper-card h2 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* CSS Grid makes the sub-cards responsive automatically! */
+  .sub-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .sub-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    color: #0056b3;
+    font-weight: bold;
+    border: 2px solid #e9ecef;
+    transition: all 0.2s ease;
+  }
+  .sub-card:hover {
+    border-color: #ff9900;
+    color: white;
+    background-color: #ff9900;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+</style>
