@@ -1,7 +1,11 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-// We accept the pageTitle, and optionally a description for SEO
+
+// 1. We keep YOUR excellent default description for SEO
 const { pageTitle, description = "CivisCraft: Think, Serve, Lead. Free, high-quality UPSC study materials and notes." } = Astro.props;
+
+// 2. We add the NEW Canonical URL calculator
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
@@ -15,11 +19,20 @@ const { pageTitle, description = "CivisCraft: Think, Serve, Lead. Free, high-qua
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     
-    <!-- FIX 1: ClientRouter is now safely tucked INSIDE the <head> tags! -->
+    <!-- NEW: Canonical URL to protect your SEO rankings -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- NEW: Open Graph tags for beautiful WhatsApp/Twitter/Telegram sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    
+    <!-- FIX 1: ClientRouter is safely tucked INSIDE the <head> tags! -->
     <ClientRouter />
   </head>
   <body>
-    <!-- FIX 2: Added transition:persist to stop the flickering! -->
+    <!-- FIX 2: Your navigation with transition:persist is untouched! -->
     <nav class="main-nav" transition:persist>
       <!-- The Website Name / Brand -->
       <a href="/upsc-astro-blog/" class="site-title">
