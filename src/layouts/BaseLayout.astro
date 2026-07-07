@@ -13,7 +13,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width", initial-scale=1.0"/>
     <meta name="generator" content={Astro.generator} />
     
     <!-- Our SEO Tags -->
@@ -64,6 +64,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 <!-- The styling for our new navigation is placed at the very bottom -->
 <style>
+  /* --- SCOPED STYLES (Only affects this layout file) --- */
   .main-nav {
     background-color: #030370;
     padding: 1rem 2rem;
@@ -98,5 +99,74 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   }
   .nav-links a:hover {
     color: #cab10a; 
+  }
+</style>
+
+<style is:global>
+  /* --- GLOBAL STYLES (Affects the entire website and Markdown files) --- */
+  
+  /* 1. Use the modern border-box sizing model for everything */
+  html {
+    box-sizing: border-box;
+  }
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+
+  /* 2. Remove default browser margins and prevent horizontal scrolling */
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+  }
+
+  /* 3. Ensure images, videos, and SVGs never break the screen width */
+  img, svg, video {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* 4. Ensure long text or URLs in your study guides wrap to the next line */
+  p, h1, h2, h3, a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  /* 5. Prevent Markdown code blocks and tables from stretching the page */
+  pre {
+    max-width: 100%;
+    overflow-x: auto; /* Creates a scrollbar ONLY inside the code box if needed */
+  }
+  
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto; 
+    white-space: nowrap; /* Prevents table columns from squishing too much */
+  }
+  @media (max-width: 600px) {
+    /* 1. Stack the logo and links vertically instead of side-by-side */
+    .main-nav {
+      flex-direction: column; 
+      gap: 1rem;
+      padding: 1rem;
+    }
+    
+    /* 2. Shrink the giant title slightly for small screens */
+    .site-title {
+      font-size: 1.8rem; 
+    }
+
+    /* 3. Turn the links container into a wrapping flexbox */
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap; /* This is the magic that stops the stretching! */
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    /* 4. Remove the rigid left margin from desktop */
+    .nav-links a {
+      margin-left: 0; 
+    }
   }
 </style>
