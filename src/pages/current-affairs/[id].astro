@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// We import getCollection to fetch the data, and render to compile the Markdown [5]
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+
+// 1. getStaticPaths tells Astro exactly which URLs to generate [6]
+export async function getStaticPaths() {
+  const updates = await getCollection('current-affairs');
+  
+  // We map over every daily update and create a route using its unique ID [7]
+  return updates.map(entry => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+// 2. We extract the specific entry data passed down from getStaticPaths [6]
+const { entry } = Astro.props;
+
+// 3. We use the render() function to convert the raw Markdown into HTML [8]
+const { Content } = await render(entry);
+---
+
+<BaseLayout pageTitle={`${entry.data.title} | CivisCraft`} description="Daily Current Affairs for UPSC">
+  <article class="news-article">
+    <span class="category">{entry.data.category}</span>
+    
+    <h1>{entry.data.title}</h1>
+    <p class="date">Published: {entry.data.date.toISOString().split('T')}</p>
+    
+    <hr />
+    
+    <div class="content">
+      {/* 4. This component injects the actual compiled Markdown text! [9, 10] */}
+      <Content />
+    </div>
+    
+    <div class="back-link">
+      <a href="/upsc-astro-blog/current-affairs">← Back to Daily Feed</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .news-article {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  h1 {
+    color: #030370;
+    margin-top: 0.5rem;
+  }
+  .category {
+    background: #e9ecef;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #030370;
+    font-size: 0.85rem;
+  }
+  .date {
+    color: #666;
+    font-style: italic;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #eee;
+    margin: 1.5rem 0;
+  }
+  .content {
+    line-height: 1.8;
+    color: #333;
+    font-size: 1.1rem;
+  }
+  .back-link {
+    margin-top: 3rem;
+  }
+  .back-link a {
+    color: #cab10a;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .back-link a:hover {
+    text-decoration: underline;
+  }
+</style>

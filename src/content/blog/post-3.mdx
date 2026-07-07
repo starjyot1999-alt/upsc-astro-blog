@@ -5,13 +5,17 @@ description: 'Understanding the mechanism and impact of the Indian Monsoon.'
 author: 'Rohan Kashid'
 tags: ["geography", "environment", "gs1"]
 ---
+{/* 1. Import the Image tool and your local image file */}
+import { Image } from 'astro:assets';
+import monsoonImage from '../../assets/indian-monsoon.png';
 
 # The Indian Monsoon
 
 The climate of India is heavily influenced by the monsoon winds. The word monsoon comes from the Arabic word *mausim*, meaning season.
 
 ### Visual Monsoon Guide
-![Indian Monsoon](/upsc-astro-blog/images/Indian-monsoon.png)
+{/* 2. Replace the standard markdown image with the optimized Astro component */}
+<Image src={monsoonImage} alt="Indian Monsoon" />
 
 ## Important Factors
 * **Differential Heating:** Land heats up and cools down much faster than water.
