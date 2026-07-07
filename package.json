@@ -5,9 +5,11 @@
   "engines": {
     "node": ">=22.12.0"
   },
-  "scripts": {
+   "scripts": {
+    "postinstall": "npx playwright install chromium",
     "dev": "astro dev",
-    "build": "astro build",
+    "start": "astro dev",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
