@@ -69,9 +69,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     background-color: #030370;
     padding: 1rem 2rem;
     display: flex; 
-    justify-content: space-between; 
+    /* 1. CHANGED: Bring items left instead of pushing them to the edges */
+    justify-content: flex-start; 
     align-items: center; 
+    /* 2. NEW: This sets the exact space between the title and the buttons */
+    gap: 3rem; 
   }
+  
   .site-title {
     color: white;
     font-size: 2.5rem; 
@@ -83,22 +87,54 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     line-height: 1; 
     align-items: center;
   }
+  
   .site-title:hover {
     color: #f8f9fa;
   }
+  
   .brand-logo {
     height: 128px; 
     width: auto;
   }
+  
+  /* 3. NEW: Make the container of links a flexbox so we can use 'gap' */
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem; /* Space between the individual buttons */
+  }
+  
+  /* 4. CHANGED: Turn the text links into bordered buttons */
   .nav-links a {
     color: white;
-    margin-left: 1.5rem;
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.2s ease;
+    padding: 0.5rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    transition: all 0.2s ease;
   }
+  
+  /* 5. CHANGED: Fill the button with Gold when hovered */
   .nav-links a:hover {
-    color: #cab10a; 
+    background-color: #cab10a; 
+    color: #030370; /* Dark blue text on gold background */
+    border-color: #cab10a;
+  }
+
+  /* --- Mobile Media Query --- */
+  @media (max-width: 600px) {
+    .main-nav {
+      flex-direction: column; 
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+    .site-title {
+      font-size: 1.8rem; 
+    }
+    .nav-links {
+      justify-content: center;
+    }
   }
 </style>
 
