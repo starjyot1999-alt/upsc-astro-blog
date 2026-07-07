@@ -1,0 +1,36 @@
+---
+// We accept a YouTube video ID and an optional title for accessibility
+const { videoId, title = "YouTube Video Lecture" } = Astro.props;
+---
+
+<div class="video-container">
+  <iframe
+    src={`https://www.youtube.com/embed/${videoId}`}
+    title={title}
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+  /* This CSS trick ensures the video perfectly maintains a 16:9 aspect ratio and shrinks on mobile! */
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; 
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 2px solid #030370; /* CivisCraft Blue */
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+  }
+</style>

@@ -9,8 +9,49 @@ tags: ["geography", "environment", "gs1"]
 # The Indian Monsoon
 
 The climate of India is heavily influenced by the monsoon winds. The word monsoon comes from the Arabic word *mausim*, meaning season.
-### Visual Monsoon  Guide
+
+### Visual Monsoon Guide
 ![Indian Monsoon](/upsc-astro-blog/images/Indian-monsoon.png)
+
 ## Important Factors
 * **Differential Heating:** Land heats up and cools down much faster than water.
 * **ITCZ:** The shift of the Inter Tropical Convergence Zone over the Ganga plain in summer.
+
+## Economic Trends: GDP Growth
+
+<div class="custom-chart">
+
+```mermaid
+xychart-beta
+    title "India GDP Growth Rate (%)"
+    x-axis ["2020", "2021", "2022", "2023", "2024"]
+    y-axis "Growth" -8 --> 12
+    line [-5.8, 9.1, 7.2, 7.3, 7.0]
+```
+
+</div>
+
+<style>{`
+  /* 1. Turn all graph lines, borders, and text to CivisCraft Blue */
+  .custom-chart svg path,
+  .custom-chart svg line {
+    stroke: #030370 !important; 
+  }
+  .custom-chart svg text {
+    fill: #030370 !important;
+    font-weight: 600; 
+  }
+
+  /* 2. Make ALL paths thick by default */
+  .custom-chart svg path {
+    stroke-width: 4px !important;
+  }
+
+  /* 3. Force the axes and grid lines back to being 1px thin! */
+  .custom-chart svg g[class*="axis"] path,
+  .custom-chart svg g[class*="axis"] line,
+  .custom-chart svg g[class*="grid"] path,
+  .custom-chart svg g[class*="grid"] line {
+    stroke-width: 1px !important;
+  }
+`}</style>

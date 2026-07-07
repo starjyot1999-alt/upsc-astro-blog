@@ -4,10 +4,12 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+  
+  // Added a safeguard (|| []) just in case a post accidentally has no tags!
+  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags || []).flat())];
 
   return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag));
+    const filteredPosts = allPosts.filter((post) => (post.data.tags || []).includes(tag));
     return {
       params: { tag },
       props: { posts: filteredPosts },
@@ -19,19 +21,18 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BaseLayout pageTitle={`UPSC Notes: ${tag}`} description={`All free UPSC study materials related to ${tag}`}>
+<BaseLayout pageTitle={`UPSC Notes: ${tag} | CivisCraft`} description={`All free UPSC study materials related to ${tag}`}>
   <div class="tag-header">
-    <h1>📑 Study Guides for: <span class="highlight">{tag}</span></h1>
+    <h1>📑 Study Guides for: <span class="highlight">#{tag}</span></h1>
     <p>Browse all our free notes and materials for the {tag} syllabus.</p>
   </div>
 
-  <!-- We upgraded from a basic <ul> to a professional CSS Grid! -->
+  <!-- We kept your excellent CSS Grid! -->
   <div class="post-grid">
     {posts.map((post) => (
       <article class="post-card">
         <h2><a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a></h2>
         
-        <!-- We added the description so students know what the post is about -->
         <p>{post.data.description}</p>
         
         <a class="read-more" href={`/upsc-astro-blog/posts/${post.id}`}>Read Notes →</a>
@@ -46,13 +47,11 @@ const { posts } = Astro.props;
     margin-bottom: 3rem;
   }
   .highlight {
-    color: #0056b3;
+    color: #030370; /* CivisCraft Blue */
     text-transform: capitalize;
-    /* Added a nice orange underline for emphasis */
-    border-bottom: 3px solid #ff9900; 
+    border-bottom: 3px solid #cab10a; /* CivisCraft Gold */
   }
   
-  /* Borrowing our grid layout from the blog library */
   .post-grid {
     display: grid;
     gap: 1.5rem;
@@ -63,7 +62,7 @@ const { posts } = Astro.props;
     background: #f8f9fa;
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid #0056b3;
+    border-left: 4px solid #cab10a; /* CivisCraft Gold */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .post-card:hover {
@@ -76,15 +75,15 @@ const { posts } = Astro.props;
   }
   .post-card h2 a {
     text-decoration: none;
-    color: #333;
+    color: #030370; /* CivisCraft Blue */
   }
   .post-card h2 a:hover {
-    color: #0056b3;
+    color: #cab10a; /* CivisCraft Gold */
   }
   .read-more {
     display: inline-block;
     margin-top: 1rem;
-    color: #0056b3;
+    color: #cab10a; /* CivisCraft Gold */
     font-weight: bold;
     text-decoration: none;
   }

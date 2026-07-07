@@ -137,4 +137,36 @@ const { frontmatter, headings } = Astro.props;
     margin: 2rem auto; 
     display: block; 
   }
+  .post-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Keeps the rounded corners intact */
+  }
+
+  .post-content :global(th) {
+    background-color: #030370; /* CivisCraft Blue */
+    color: white;
+    text-align: left;
+    padding: 1rem;
+    font-weight: bold;
+  }
+
+  .post-content :global(td) {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #444;
+  }
+
+  /* Alternating row colors for easier reading */
+  .post-content :global(tr:nth-child(even)) {
+    background-color: #f8f9fa;
+  }
+  /* A nice light-blue hover effect so students don't lose their place */
+  .post-content :global(tr:hover td) {
+    background-color: #f1f8ff; 
+  }
 </style>

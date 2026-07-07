@@ -1,0 +1,93 @@
+---
+// We accept a title and an array of data objects (label and value)
+const { title, data } = Astro.props;
+
+// We use JavaScript's Math.max to find the highest number in the data.
+// This allows us to calculate the percentage width of each bar!
+const maxValue = Math.max(...data.map(item => item.value));
+---
+
+<div class="chart-container">
+  {title && <h3>{title}</h3>}
+  
+  <div class="bars">
+    {data.map((item) => (
+      <div class="bar-row">
+        <span class="label">{item.label}</span>
+        
+        <div class="bar-track">
+          <!-- We dynamically set the CSS width based on the data value! -->
+          <div class="bar-fill" style={`width: ${(item.value / maxValue) * 100}%`}></div>
+        </div>
+        
+        <span class="value">{item.value}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .chart-container {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border-left: 4px solid #cab10a; /* CivisCraft Gold */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+  
+  h3 { 
+    margin-top: 0; 
+    color: #030370; /* CivisCraft Blue */
+    margin-bottom: 1.5rem;
+  }
+  
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .label { 
+    width: 120px; 
+    font-weight: bold; 
+    color: #333; 
+    font-size: 0.95rem; 
+  }
+  
+  .bar-track {
+    flex: 1;
+    background: #e9ecef;
+    height: 24px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .bar-fill {
+    height: 100%;
+    background: #030370; /* CivisCraft Blue */
+    border-radius: 4px;
+    /* Adds a smooth loading animation when the page first opens */
+    transition: width 1s ease-in-out; 
+  }
+  
+  .value { 
+    width: 50px; 
+    text-align: right; 
+    color: #444; 
+    font-weight: bold; 
+  }
+  
+  /* Make it responsive for mobile phones */
+  @media (max-width: 600px) {
+    .bar-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+    .label { width: 100%; }
+    .bar-track { width: 100%; }
+    .value { align-self: flex-end; }
+  }
+</style>

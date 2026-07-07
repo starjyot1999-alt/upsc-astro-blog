@@ -5,9 +5,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout pageTitle="Contact CivisCraft" description="Get in touch with CivisCraft for UPSC preparation queries.">
   <div class="contact-container">
     <h1>📬 Get in Touch</h1>
-    <p>Have a question about our UPSC notes or want to suggest a new topic? Drop a message below!</p>
+    <p class="subtitle">Have a question about our UPSC notes or want to suggest a new topic? Drop a message below!</p>
 
-    <!-- Notice we kept YOUR Formspree action link here so emails actually send! -->
+    <!-- Your brilliant Formspree action link is kept intact so emails actually send! -->
     <form class="contact-form" action="https://formspree.io/f/xkolydva" method="POST">
       <div class="form-group">
         <label for="name">Name:</label>
@@ -36,12 +36,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 2rem 1rem;
   }
   h1 {
-    color: #0056b3;
+    color: #030370; /* Updated to CivisCraft Blue */
     text-align: center;
+    margin-bottom: 0.5rem;
   }
-  p {
+  .subtitle {
     text-align: center;
-    color: #444;
+    color: #666;
     margin-bottom: 2rem;
   }
   
@@ -53,8 +54,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    /* The CivisCraft Orange top border! */
-    border-top: 4px solid #ff9900; 
+    /* Updated to CivisCraft Gold top border! */
+    border-top: 4px solid #cab10a; 
   }
   .form-group {
     display: flex;
@@ -71,11 +72,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-radius: 4px;
     font-size: 1rem;
     width: 100%;
-    /* Prevents padding from breaking the 100% width limit */
+    /* Your excellent CSS addition to prevent layout breaking */
     box-sizing: border-box; 
+    font-family: inherit;
   }
+  
+  /* NEW: A nice golden glow when the user is typing in a field */
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #cab10a;
+    box-shadow: 0 0 5px rgba(202, 177, 10, 0.3);
+  }
+
   .submit-btn {
-    background-color: #0056b3;
+    background-color: #030370; /* Updated to CivisCraft Blue */
     color: white;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -86,6 +96,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     transition: background 0.2s ease;
   }
   .submit-btn:hover {
-    background-color: #ff9900;
+    background-color: #02024d; /* Darker blue on hover */
   }
 </style>

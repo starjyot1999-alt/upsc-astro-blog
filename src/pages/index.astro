@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EmailSignup from '../components/EmailSignup.astro';
+import { getCollection } from 'astro:content'; // 1. Import the fetcher!
 
-// 1. We define your exact UPSC syllabus structure here!
+// 2. Fetch all posts, sort by newest, and keep only the top 3
+const allPosts = await getCollection('blog');
+const latestPosts = allPosts
+  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+  .slice(0, 3);
+
+// 3. Your exact UPSC syllabus structure!
 const syllabus = [
   {
     title: "Prelims",
@@ -34,18 +41,32 @@ const syllabus = [
   }
 ];
 
-// 2. A helper function to turn "Ancient History" into the URL format "ancient-history"
 const slugify = (text) => text.toLowerCase().replace(/,/g, '').replace(/\s+/g, '-');
 ---
 
 <BaseLayout pageTitle="CivisCraft" description="Think, Serve, Lead">
+  
   <div class="hero-section">
     <h1>🎯 CivisCraft: Crafting Civil Servants</h1>
     <p>Select a paper and topic below to dive into our free, structured study materials.</p>
   </div>
 
+  <!-- NEW: Automatically display the 3 latest posts! -->
+  <section class="latest-notes">
+    <h2 class="section-heading">🔥 Latest Study Guides</h2>
+    <div class="latest-grid">
+      {latestPosts.map((post) => (
+        <a href={`/upsc-astro-blog/posts/${post.id}`} class="post-card">
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- EXISTING: Your beautiful Syllabus Grid -->
+  <h2 class="section-heading">📚 Browse by Syllabus</h2>
   <div class="syllabus-container">
-    <!-- Astro loops through the syllabus and creates a section for each paper -->
     {syllabus.map((section) => (
       <section class="paper-card">
         <h2>{section.title}</h2>
@@ -61,7 +82,6 @@ const slugify = (text) => text.toLowerCase().replace(/,/g, '').replace(/\s+/g, '
     ))}
   </div>
 
-  <!-- Keep your waitlist at the bottom of the home page -->
   <EmailSignup />
 </BaseLayout>
 
@@ -71,31 +91,76 @@ const slugify = (text) => text.toLowerCase().replace(/,/g, '').replace(/\s+/g, '
     margin-bottom: 3rem;
   }
   .hero-section h1 {
-    color: #0056b3;
+    color: #030370; 
     font-size: 2.5rem;
   }
+  .section-heading {
+    text-align: center;
+    color: #030370;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+
+  /* NEW: Latest Notes Styles */
+  .latest-notes {
+    margin-bottom: 4rem;
+  }
+  .latest-grid {
+    display: grid;
+    /* CSS Grid automatically creates 1 column on mobile, and up to 3 on desktop! */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  .post-card {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    border-left: 4px solid #030370; /* Blue accent for posts */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .post-card h3 {
+    color: #030370;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  /* EXISTING: Syllabus Styles */
   .syllabus-container {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem; /* Space between the main GS papers */
+    gap: 2.5rem; 
     margin-bottom: 4rem;
   }
+  
   .paper-card {
     background: #f8f9fa;
     padding: 2rem;
     border-radius: 12px;
-    border-top: 5px solid #0056b3;
+    border-top: 5px solid #cab10a; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
   }
+  
+  .paper-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  }
+
   .paper-card h2 {
     margin-top: 0;
-    color: #333;
+    color: #030370; 
     margin-bottom: 1.5rem;
     border-bottom: 2px solid #e9ecef;
     padding-bottom: 0.5rem;
   }
   
-  /* CSS Grid makes the sub-cards responsive automatically! */
   .sub-cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,15 +172,16 @@ const slugify = (text) => text.toLowerCase().replace(/,/g, '').replace(/\s+/g, '
     border-radius: 8px;
     text-align: center;
     text-decoration: none;
-    color: #0056b3;
+    color: #030370; 
     font-weight: bold;
     border: 2px solid #e9ecef;
     transition: all 0.2s ease;
   }
+  
   .sub-card:hover {
-    border-color: #ff9900;
+    border-color: #cab10a; 
     color: white;
-    background-color: #ff9900;
+    background-color: #cab10a; 
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
