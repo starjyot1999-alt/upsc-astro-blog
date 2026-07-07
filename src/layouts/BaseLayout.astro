@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-
+import AdBanner from '../components/AdBanner.astro';
+import Footer from '../components/Footer.astro';
 // 1. We keep YOUR excellent default description for SEO
 const { pageTitle, description = "CivisCraft: Think, Serve, Lead. Free, high-quality UPSC study materials and notes." } = Astro.props;
 
@@ -56,6 +57,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <!-- This is where individual page or markdown content is injected -->
       <slot />
     </main>
+     <AdBanner />
+     <Footer />
   </body>
 </html>
 

@@ -2,26 +2,34 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// 1. We keep YOUR excellent Content Collections fetcher!
+// 1. Fetch all posts from your 'blog' collection instead of using Astro.glob
 const allPosts = await getCollection('blog');
+
+// 2. Sort them mathematically by 'pubDate' so the newest posts are at the top
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout pageTitle="UPSC Notes & Blog | CivisCraft" description="Browse all free UPSC study materials, notes, and articles by CivisCraft.">
-  <div class="blog-container">
-    <h1>📚 CivisCraft Study Guides</h1>
-    <p class="subtitle">Read our latest structured notes for your UPSC preparation.</p>
-
-    <div class="post-grid">
-      <!-- 2. We map over your collection using post.data and post.id -->
-      {allPosts.map((post) => (
-        <a href={`/upsc-astro-blog/posts/${post.id}`} class="post-card">
-          <h2>{post.data.title}</h2>
+<BaseLayout pageTitle="UPSC Blog | CivisCraft" description="Read our latest comprehensive UPSC study guides.">
+  <main class="blog-container">
+    <h1>📚 UPSC Study Guides</h1>
+    
+    <div class="posts-list">
+      {sortedPosts.map(post => (
+        <article class="post-card">
+          <h2>
+            <!-- Ensure this link matches your blog post URL structure! -->
+            <a href={`/upsc-astro-blog/posts/${post.id}`}>{post.data.title}</a>
+          </h2>
+          <div class="meta">
+            <!-- Notice we are using .data now instead of .frontmatter! -->
+            <span class="author">✍️ By {post.data.author}</span>
+            <span class="date">📅 Published: {post.data.pubDate.toISOString().split('T')}</span>
+          </div>
           <p>{post.data.description}</p>
-          <span class="read-more">Read Notes →</span>
-        </a>
+        </article>
       ))}
     </div>
-  </div>
+  </main>
 </BaseLayout>
 
 <style>
@@ -30,60 +38,39 @@ const allPosts = await getCollection('blog');
     margin: 0 auto;
     padding: 2rem 1rem;
   }
-  
   h1 {
-    color: #030370; /* CivisCraft Blue */
-    text-align: center;
-    margin-bottom: 0.5rem;
+    color: #030370;
+    margin-bottom: 2rem;
   }
-  
-  .subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-  }
-  
-  /* Flexbox column to stack the cards neatly */
-  .post-grid {
+  .posts-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
   }
-  
-  /* Styling each individual post card */
   .post-card {
-    background-color: #f8f9fa;
+    background: white;
     padding: 1.5rem;
     border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
-    border-left: 4px solid #cab10a; /* CivisCraft Gold accent */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-left: 5px solid #030370; 
   }
-  
-  /* A smooth floating effect when students hover over a card */
-  .post-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  
   .post-card h2 {
-    color: #030370;
     margin-top: 0;
     margin-bottom: 0.5rem;
-    font-size: 1.5rem;
   }
-  
-  .post-card p {
-    color: #444;
-    margin-bottom: 1rem;
-    line-height: 1.5;
+  .post-card h2 a {
+    color: #030370;
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
-  
-  .read-more {
+  .post-card h2 a:hover {
     color: #cab10a;
-    font-weight: bold;
+  }
+  .meta {
     font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
   }
 </style>

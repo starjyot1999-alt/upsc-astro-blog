@@ -1,0 +1,30 @@
+---
+// We use regular JavaScript here to get the current year dynamically
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <!-- We use the {currentYear} variable inside the HTML! -->
+  <p>&copy; {currentYear} CivisCraft. All rights reserved.</p>
+  <p class="disclaimer">Free, high-quality UPSC study materials and notes.</p>
+</footer>
+
+<style>
+  .site-footer {
+    text-align: center;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 4rem;
+    border-top: 2px solid #eee;
+    color: #666;
+  }
+  
+  .site-footer p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+  }
+
+  .disclaimer {
+    font-size: 0.85rem;
+    color: #999;
+  }
+</style>
